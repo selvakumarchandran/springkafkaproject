@@ -1,0 +1,50 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.9.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'war'
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+configurations {
+	// configuration that holds jars to include in the jar
+	extraLibs
+}
+
+dependencies {
+
+	compile('org.springframework.kafka:spring-kafka')
+	compile('org.springframework.boot:spring-boot-starter-web-services')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-tomcat
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat', version: '1.2.1.RELEASE'
+
+
+
+	extraLibs group:'org.springframework.kafka',name :'spring-kafka'
+	extraLibs group:'org.springframework.boot',name :'spring-boot-starter-web-services'
+	extraLibs group:'org.springframework.boot',name :'spring-boot-starter-test'
+
+
+	configurations.compile.extendsFrom(configurations.extraLibs)
+
+}
+
+
+
